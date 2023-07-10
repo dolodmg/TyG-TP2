@@ -1,0 +1,92 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>     
+    <script src="https://kit.fontawesome.com/25a709830d.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light background">
+        <img src="./img/computer.png" alt="" srcset="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    Trabajo Práctico 2 
+                </li>
+                <li class="nav-item">
+                    Franco Kral - Dolores Dominguez
+                </li>
+            </ul>
+        </div>
+    </nav> 
+    <div class="container-fluid row">
+        <div class="links-api col-2">
+            <button onclick="show()" class="btn btn-primary">Movies API</button>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="movie col-8" id="movieApi">
+                    <input type="text" id="searchInput" placeholder="Ingrese el título de la película">
+                    <button onclick="searchMovie()" class="btn btn-primary">Buscar</button>   
+                    <div id="movieDetails">
+                        <div id="movie-title"></div>
+                        <div id="movie-year"></div>
+                        <div id="movie-genre"></div>
+                        <div id="movie-direc"></div>
+                        <div id="movie-actors"></div>
+                        <div id="movie-plot"></div>
+                        <img id="movie-poster"> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <footer id="footer-text">
+        Tecnología y Gestión Web - 21/05/2023
+    </footer>
+</body>
+<script>
+    function show() {
+        if (document.getElementById('movieApi').style.display == "block") {
+            document.getElementById('movieApi').style.display = "none";
+        }
+        else {
+            document.getElementById('movieApi').style.display = "block";
+        }
+    }
+    function searchMovie() {
+      const searchQuery = document.getElementById('searchInput').value;
+      const apiUrl = `http://www.omdbapi.com/?apikey=2d435d7a&t=${encodeURIComponent(searchQuery)}`;
+      $.ajax({
+        url: apiUrl,
+        success: function(data) {
+          if (data.Response === "True") {
+            document.getElementById('movie-title').innerHTML = data.Title;
+            document.getElementById('movie-year').innerHTML = data.Year;
+            document.getElementById('movie-genre').innerHTML = data.Genre;
+            document.getElementById('movie-direc').innerHTML = data.Director;
+            document.getElementById('movie-actors').innerHTML = data.Actors;
+            document.getElementById('movie-plot').innerHTML = data.Plot;
+            document.getElementById('movie-poster').src = data.Poster;
+          } else {
+            document.getElementById('movieDetails').innerHTML = 'No se encontró ninguna película con ese título.';
+          }
+        },
+        error: function() {
+          document.getElementById('movieDetails').innerHTML = 'Ocurrió un error al realizar la búsqueda.';
+        }
+      });
+    }
+</script>
+</html>

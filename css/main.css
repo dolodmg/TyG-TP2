@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap");
+
+.container-fluid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.background {
+    background-color: rgb(0, 124, 128) !important;
+    box-shadow: 0 2px 4px 0px rgba(121, 111, 111, 0.486);
+}
+  
+.nav-item {
+    padding-left: 50px;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    font-family: 'Roboto Slab';
+}
+  
+.navbar img {
+    width: 5%;
+}
+
+.links-api {
+    background-color:rgb(144, 207, 209);
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-primary {
+    margin: 20px 20px 20px;
+    background-color: rgb(0, 124, 128) !important;
+    border: none !important;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#searchInput {
+    font-family: 'Source Sans Pro';
+    font-size: 15px;
+}
+
+.movie {
+    display: none;
+}  
+  
+#movie-title {
+    font-size: 20px;
+    font-family: 'Roboto Slab';
+    font-weight: bold;
+}
+
+#movie-year, #movie-genre, #movie-direc, #movie-actors {
+    font-size: 15px;
+    font-family: 'Roboto Slab';
+    font-weight: 700;
+}
+
+#movie-plot {
+    font-size: 15px;
+    font-family: 'Roboto Slab';
+    font-weight: 700;
+    text-align: justify;
+}
+
+#movie-poster {
+    width: 30%;
+    margin-top: 5px;
+}
+
+#footer-text {
+    background-color:rgb(0, 124, 128);
+    text-align: right;
+    color: white;
+    font-family: 'Roboto Slab';
+    font-size: 15px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
