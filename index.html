@@ -44,18 +44,25 @@
                         <input type="text" id="searchInput" placeholder="Ingrese el título de la película">
                         <button onclick="searchMovie()" class="btn btn-primary">Buscar</button> 
                     </div>    
-                    <div id="movieDetails">
-                        <div id="movie-title"></div>
-                        <div id="movie-year"></div>
-                        <div id="movie-genre"></div>
-                        <div id="movie-direc"></div>
-                        <div id="movie-actors"></div>
-                        <div id="movie-plot"></div>
-                        <img id="movie-poster"> 
+                    <div id="all-movie">
+                        <div id="movieDetails" class="row">
+                            <div class="col-4">
+                                <img id="movie-poster" class="img-fluid">
+                            </div>
+                            <div class="col-8" id="movie-text">
+                                <div id="movie-title"></div>
+                                <div id="movie-year"></div>
+                                <div id="movie-genre"></div>
+                                <div id="movie-direc"></div>
+                                <div id="movie-actors"></div>
+                                <div id="movie-plot"></div> 
+                            </div>
+                        </div>
+                        <div id="rate-movie">
+                            <button onclick="rateMovie()" class="btn btn-primary" id="btn-rate">Puntuar</button>
+                        </div> 
                     </div>
-                    <div id="rate-movie">
-                        <button onclick="rateMovie()" class="btn btn-primary" id="btn-rate">Puntuar</button>
-                    </div> 
+                    <p id="no-result">No se encontró ninguna película</p>
                 </div>
             </div>
         </div>
