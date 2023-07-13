@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>     
     <script src="https://kit.fontawesome.com/25a709830d.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./js/script.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light background">
@@ -33,6 +34,8 @@
     <div class="container-fluid row">
         <div class="links-api col-2">
             <button onclick="show()" class="btn btn-primary">Movies API</button>
+            <button onclick="showRates()" class="btn btn-primary">Ver puntajes</button>
+            <button onclick="showStats()" class="btn btn-primary">Ver stats</button>
         </div>
         <div class="col-10">
             <div class="row">
@@ -48,6 +51,9 @@
                         <div id="movie-plot"></div>
                         <img id="movie-poster"> 
                     </div>
+                    <div id="rate-movie">
+                        <button onclick="rateMovie()" class="btn btn-primary" id="btn-rate">Puntuar</button>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -56,37 +62,4 @@
         Tecnología y Gestión Web - 21/05/2023
     </footer>
 </body>
-<script>
-    function show() {
-        if (document.getElementById('movieApi').style.display == "block") {
-            document.getElementById('movieApi').style.display = "none";
-        }
-        else {
-            document.getElementById('movieApi').style.display = "block";
-        }
-    }
-    function searchMovie() {
-      const searchQuery = document.getElementById('searchInput').value;
-      const apiUrl = `http://www.omdbapi.com/?apikey=2d435d7a&t=${encodeURIComponent(searchQuery)}`;
-      $.ajax({
-        url: apiUrl,
-        success: function(data) {
-          if (data.Response === "True") {
-            document.getElementById('movie-title').innerHTML = data.Title;
-            document.getElementById('movie-year').innerHTML = data.Year;
-            document.getElementById('movie-genre').innerHTML = data.Genre;
-            document.getElementById('movie-direc').innerHTML = data.Director;
-            document.getElementById('movie-actors').innerHTML = data.Actors;
-            document.getElementById('movie-plot').innerHTML = data.Plot;
-            document.getElementById('movie-poster').src = data.Poster;
-          } else {
-            document.getElementById('movieDetails').innerHTML = 'No se encontró ninguna película con ese título.';
-          }
-        },
-        error: function() {
-          document.getElementById('movieDetails').innerHTML = 'Ocurrió un error al realizar la búsqueda.';
-        }
-      });
-    }
-</script>
 </html>
