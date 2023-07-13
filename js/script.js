@@ -6,8 +6,9 @@ function show() {
         document.getElementById('movieApi').style.display = "block";
     }
 }
+
 function searchMovie() {
-    const searchQuery = document.getElementById('searchInput').value;
+    var searchQuery = document.getElementById('searchInput').value;
     const apiUrl = `http://www.omdbapi.com/?apikey=2d435d7a&t=${encodeURIComponent(searchQuery)}`;
     $.ajax({
         url: apiUrl,
