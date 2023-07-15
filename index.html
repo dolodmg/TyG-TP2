@@ -15,7 +15,7 @@
     <script src="./js/script.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-light background">
+    <nav class="navbar navbar-expand-md navbar-light">
         <img src="./img/computer.png" alt="" srcset="">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
         </div>
         <div class="col-10">
             <div class="row">
-                <div class="movie col-8" id="movieApi">
+                <div class="movie col-10" id="movieApi">
                     <div>
                         <input type="text" id="searchInput" placeholder="Ingrese el título de la película">
                         <button onclick="searchMovie()" class="btn btn-primary">Buscar</button> 
@@ -50,10 +50,9 @@
                                 <img id="movie-poster" class="img-fluid">
                             </div>
                             <div class="col-8" id="movie-text">
-                                <div id="movie-title"></div>
                                 <div id="movie-year"></div>
-                                <div id="movie-genre"></div>
-                                <div id="movie-direc"></div>
+                                <div id="movie-title"></div>
+                                <div id="movie-director"></div>
                                 <div id="movie-actors"></div>
                                 <div id="movie-plot"></div> 
                             </div>

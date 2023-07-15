@@ -17,10 +17,9 @@ function searchMovie() {
                 document.getElementById('no-result').style.display = "none";
                 document.getElementById('all-movie').style.display = "block";
                 document.getElementById('movie-title').innerHTML = data.Title;
-                document.getElementById('movie-year').innerHTML = data.Year;
-                document.getElementById('movie-genre').innerHTML = data.Genre;
-                document.getElementById('movie-direc').innerHTML = data.Director;
-                document.getElementById('movie-actors').innerHTML = data.Actors;
+                document.getElementById('movie-year').innerHTML = data.Year + ' | ' + data.Genre ;
+                document.getElementById('movie-director').innerHTML =  'Director: ' + data.Director;
+                document.getElementById('movie-actors').innerHTML = 'Cast: ' + data.Actors;
                 document.getElementById('movie-plot').innerHTML = data.Plot;
                 document.getElementById('movie-poster').src = data.Poster;
                 // verifica que la pelicula no tenga puntuacion

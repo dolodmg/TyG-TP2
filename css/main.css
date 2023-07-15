@@ -5,20 +5,19 @@
 
 .container-fluid {
     flex:1;
-
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.background {
-    background-color: rgb(0, 124, 128) !important;
-    box-shadow: 0 2px 4px 0px rgba(121, 111, 111, 0.486);
+    background-color: rgb(253, 225, 230) !important;
 }
   
+.navbar {
+    background-color: rgb(238, 75, 26);
+}
+
 .nav-item {
     padding-left: 50px;
     font-size: 20px;
@@ -31,23 +30,30 @@ body {
 }
 
 .links-api {
-    background-color:rgb(144, 207, 209);
     display: flex;
     flex-direction: column;
+    background-color: rgb(255, 141, 34);
 }
 
 .btn-primary {
     margin: 20px 20px 20px;
-    background-color: rgb(248, 54, 167) !important;
-    border: none !important;
-    border-radius: 10px;
-    font-weight: bold;
+    background-color: rgb(255, 167, 182) !important;
+    color: rgb(255, 43, 96) !important;
+    border-color: rgb(255, 43, 96) !important;
+    border-radius: 40px !important;
+    border-width: 2px !important;
+    font-weight: bold !important;
     font-size: 15px;
 }
 
 #searchInput {
     font-family: 'Source Sans Pro';
     font-size: 15px;
+    border-color: rgb(255, 43, 96) !important;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 7px 10px 7px; 
+    width: 210px;
 }
 
 .movie {
@@ -68,26 +74,36 @@ body {
 }
 
 #movie-title {
-    font-size: 40px;
+    font-size: 50px;
     font-family: 'Caprasimo';
+    color: rgb(238, 75, 26);
 }
 
-#movie-year, #movie-genre, #movie-direc, #movie-actors {
-    font-size: 15px;
-    font-family: 'Roboto Slab';
-    font-weight: 700;
+#movie-year {
+    font-size: 14px;
+    font-family: 'Poppins';
+    font-weight: light;
+    color: rgb(255, 141, 34);
+}
+
+#movie-director, #movie-actors, #movie-plot {
+    font-size: 16px;
+    font-family: 'Poppins';
+    font-weight: 500;
+    color: rgb(255, 141, 34);
 }
 
 #movie-plot {
-    font-size: 15px;
-    font-family: 'Roboto Slab';
-    font-weight: 700;
     text-align: justify;
 }
 
 #movie-poster {
     width: 100%;
     margin-top: 5px;
+}
+
+footer {
+    background-color: rgb(255, 43, 96) !important;
 }
 
 #footer-text {
@@ -99,4 +115,3 @@ body {
     padding-right: 20px;
     padding-bottom: 10px;
 }
-
