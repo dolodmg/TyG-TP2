@@ -74,7 +74,7 @@ body {
 }
 
 #movie-title {
-    font-size: 50px;
+    font-size: 45px;
     font-family: 'Caprasimo';
     color: rgb(238, 75, 26);
 }
@@ -100,6 +100,40 @@ body {
 #movie-poster {
     width: 100%;
     margin-top: 5px;
+}
+
+.movie-rate {
+    padding-left: 50px;
+}
+
+.movie-rate .stars {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+h2 {
+    font-size: 20px !important;
+    padding-top: 10px ;
+    font-family: 'Poppins';
+    font-weight: bolder !important;
+    color: rgb(238, 75, 26);
+}
+
+.stars i {
+    color: rgb(204, 154, 161);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.stars i.active {
+    color: rgb(255, 43, 96);
+}
+
+#no-result {
+    font-size: 15px;
+    font-family: 'Poppins';
 }
 
 footer {

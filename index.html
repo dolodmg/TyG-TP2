@@ -12,7 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>     
     <script src="https://kit.fontawesome.com/25a709830d.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="./js/script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+    <script src="./js/script.js" defer></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-light">
@@ -57,9 +58,16 @@
                                 <div id="movie-plot"></div> 
                             </div>
                         </div>
-                        <div id="rate-movie">
-                            <button onclick="rateMovie()" class="btn btn-primary" id="btn-rate">Puntuar</button>
-                        </div> 
+                        <div class="movie-rate">
+                            <h2>Puntuar película</h2>
+                            <div class="stars" id="rating" onclick="addRating()">
+                                <i class="fa-solid fa-star" id="rating-1" onclick="addRating()"></i>
+                                <i class="fa-solid fa-star" id="rating-2" onclick="addRating()"></i>
+                                <i class="fa-solid fa-star" id="rating-3" onclick="addRating()"></i>
+                                <i class="fa-solid fa-star" id="rating-4" onclick="addRating()"></i>
+                                <i class="fa-solid fa-star" id="rating-5" onclick="addRating()"></i>
+                            </div>
+                        </div>
                     </div>
                     <p id="no-result">No se encontró ninguna película</p>
                 </div>
