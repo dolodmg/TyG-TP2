@@ -176,9 +176,10 @@ function getPuntuaciones() {
           var listItem = document.createElement('li');
           listItem.innerHTML = `
             <div class="movie-item">
-              <h2 id="movie-title">${movie.attributes.Title}</h2>
-              <div id="movie-rating">${movie.attributes.Rating}</div>
-              <div id="movie-poster"><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
+              <h2>${movie.attributes.Title}</h2>
+              <div>${movie.attributes.Rating}</div>
+              <div><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
+              <button onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
             </div>
           `;
           movieList.appendChild(listItem);
@@ -199,6 +200,26 @@ function getPuntuaciones() {
 };
 
 
+function eliminarPeliculaPuntuada(movieID) {
+  $.ajax({
+    url: `https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas/${movieID}`,
+    type: 'DELETE',
+    dataType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwt}`
+    },
+    success: function (response) {
+      console.log(`Película con ID ${movieID} eliminada correctamente.`);
+      // Opcional: puedes realizar alguna acción después de eliminar la película, como actualizar la lista de películas en la interfaz.
+      // Por ejemplo, si quieres refrescar la tabla de puntuaciones después de eliminar una película, puedes llamar a la función getPuntuaciones() aquí.
+    },
+    error: function (error) {
+      console.log(`Error al eliminar película con ID ${movieID}.`);
+      // Opcional: muestra un mensaje de error en la interfaz si la película no pudo ser eliminada.
+    }
+  });
+}
 
 
 
