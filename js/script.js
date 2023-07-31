@@ -1,3 +1,26 @@
+var jwt = ''
+
+$(document).ready(function () {
+  $.ajax({
+    url: 'https://gestionweb.frlp.utn.edu.ar/api/auth/local',
+    method: 'POST',
+    dataType: 'json',
+    data: {
+      identifier: 'api-user@example.com',
+      password: '123456'
+    },
+    success: function (response) {
+      jwt = response.jwt
+      console.log(jwt)
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+});
+
+var movieData;
+
 function show() {
     if (document.getElementById('movieApi').style.display == "block") {
         document.getElementById('movieApi').style.display = "none";
@@ -33,9 +56,25 @@ function searchMovie() {
             document.getElementById('allMovie').innerHTML = 'Ocurrió un error al realizar la búsqueda.';
     }
   });
+  movieData = {                                                     //agregue yo
+    "Title": document.getElementById('movie-title').innerHTML,
+    "Poster": document.getElementById('movie-poster').src
+  };
 }
 
+
+document.getElementById('rating-1').value='1';
+document.getElementById('rating-2').value='2';
+document.getElementById('rating-3').value='3';
+document.getElementById('rating-4').value='4';
+document.getElementById('rating-5').value='5';
+
+
 //Rate para las películas
+
+var movieData;
+var movieRatings = {};
+
 var stars = document.querySelectorAll(".stars i");
 function getID() {
     var btnID = event.target.id;
@@ -44,56 +83,139 @@ stars.forEach((star, index1) => {
   star.addEventListener("click", () => {
     stars.forEach((star, index2) => {
       index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
+      /*
       $.ajax({
-        url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-pelicula',
+        url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
         type: 'POST',
+        dataType: 'json',             //yo
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwt}`
+          'Authorization': `Bearer ${jwt}` //aca habia un error
         },
         data: JSON.stringify({
           "data": {
-            "Title": data.Title,
-            "Poster": data.Poster,
-            "Rating": star.target.id.value
-        })
+            "Title": movieData.Title,        //Modifique yo
+            "Poster": movieData.Poster,
+            "Rating": star.id
+        }}),
+        
     });
+    */
     });
   });
 });
 
-document.getElementById('rating-1').value='1';
-document.getElementById('rating-2').value='2';
-document.getElementById('rating-3').value='3';
-document.getElementById('rating-4').value='4';
-document.getElementById('rating-5').value='5';
-
 function addRating() {
+  var activeStar = document.querySelector(".stars .active");
+  if (activeStar) {
+    var ratingValue = activeStar.id.split("-")[1];
+    var movieTitle = document.getElementById('movie-title').innerHTML;
+    var moviePoster = document.getElementById('movie-poster').src;
+    
+    // Guardar el rating de la película en el objeto movieRatings
+    movieRatings[movieTitle] = {
+      "Rating": ratingValue,
+      "Poster": moviePoster,
+      "Title":movieTitle
+    };
+    
     $.ajax({
-        url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-pelicula',
-        type: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwt}`
-        },
-        data: JSON.stringify({
-          "data": {
-            "Title": data.Title,
-            "Poster": data.Poster,
-            "Rating": 
-        })
+      url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
+      type: 'POST',
+      dataType: 'json',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}`
+      },
+      data: JSON.stringify({
+        "data": {
+          "Title": movieRatings.Title, //.
+          "Poster": movieRatings.Poster,
+          "Rating": ratingValue.Rating
+        }
+      }),
+      success: function (response) {
+        console.log(response);
+        Swal.fire({
+          title: 'Se puntuó correctamente',
+          icon: 'success',
+        });
+      },
+      error: function (error) {
+        console.log(error);
+        Swal.fire({
+          title: 'Error al puntuar',
+          text: 'Ocurrió un error al guardar la puntuación.',
+          icon: 'error',
+        });
+      }
     });
+  } else {
+    console.log("Por favor, seleccione un valor de rating antes de guardar.");
+  }
 };
 
+function getPuntuaciones() {
+  $.ajax({
+    url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
+    type: 'GET',
+    dataType: 'json',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwt}`
+    },
+    success: function (response) {
+      console.log(response);
 
-//Proximo objetivo ver los puntajes al apretar ver puntaje!
-/*
-function showPeliculasPuntuadas() {
-    if (document.getElementById('a').style.display == "block") {
-        document.getElementById('a').style.display = "none";
+      if (Array.isArray(response.data) && response.data.length > 0) { // Verificar si la respuesta es un arreglo no vacío
+        // Aquí puedes manejar los datos obtenidos de la API y mostrarlos en el HTML
+        var movieList = document.getElementById('movie-list');
+        //movieList.innerHTML = ''; // Limpiamos la lista antes de agregar los elementos
+
+        response.data.forEach(function (movie) {
+          // Asegúrate de que el objeto tenga las propiedades esperadas (Title y Rating)
+          if (movie.data && movie.data.Title && movie.data.Rating && movie.data.Poster) {
+            var listItem = document.createElement('li');
+            listItem.innerHTML = `
+              <div class="movie-item">
+                <p>Holaaaaaaa</p>
+                <div id="movie-title">${movie.data.Title}</div>
+                <div id="movie-rating">${movie.data.Rating}</div>
+                <div id="movie-poster"><img src="${movie.data.Poster}" alt="Movie Poster"></div>
+              </div>
+            `;
+            movieList.appendChild(listItem);
+          }
+        });
+      } else {
+        console.log('La respuesta de la API no contiene datos válidos o está vacía.');
+      }
+    },
+    error: function (error) {
+      console.log(error);
+      Swal.fire({
+        title: 'Error al obtener puntuaciones',
+        text: 'Ocurrió un error al obtener las puntuaciones.',
+        icon: 'error',
+      });
     }
-    else {
-        document.getElementById('a').style.display = "block";
-    }
+  });
 }
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
