@@ -114,9 +114,9 @@ function addRating() {
     
     // Guardar el rating de la película en el objeto movieRatings
     movieRatings[movieTitle] = {
-      "Rating": ratingValue,
+      "Title":movieTitle,
       "Poster": moviePoster,
-      "Title":movieTitle
+      "Rating": ratingValue,
     };
     
     $.ajax({
@@ -129,9 +129,9 @@ function addRating() {
       },
       data: JSON.stringify({
         "data": {
-          "Title": movieRatings.Title, //.
-          "Poster": movieRatings.Poster,
-          "Rating": ratingValue.Rating
+          "Title": movieTitle, //.
+          "Poster": moviePoster,
+          "Rating": ratingValue
         }
       }),
       success: function (response) {
@@ -155,6 +155,7 @@ function addRating() {
   }
 };
 
+
 function getPuntuaciones() {
   $.ajax({
     url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
@@ -167,25 +168,20 @@ function getPuntuaciones() {
     success: function (response) {
       console.log(response);
 
-      if (Array.isArray(response.data) && response.data.length > 0) { // Verificar si la respuesta es un arreglo no vacío
-        // Aquí puedes manejar los datos obtenidos de la API y mostrarlos en el HTML
+      if (Array.isArray(response.data) && response.data.length > 0) {
         var movieList = document.getElementById('movie-list');
-        //movieList.innerHTML = ''; // Limpiamos la lista antes de agregar los elementos
+        movieList.innerHTML = '';
 
         response.data.forEach(function (movie) {
-          // Asegúrate de que el objeto tenga las propiedades esperadas (Title y Rating)
-          if (movie.data && movie.data.Title && movie.data.Rating && movie.data.Poster) {
-            var listItem = document.createElement('li');
-            listItem.innerHTML = `
-              <div class="movie-item">
-                <p>Holaaaaaaa</p>
-                <div id="movie-title">${movie.data.Title}</div>
-                <div id="movie-rating">${movie.data.Rating}</div>
-                <div id="movie-poster"><img src="${movie.data.Poster}" alt="Movie Poster"></div>
-              </div>
-            `;
-            movieList.appendChild(listItem);
-          }
+          var listItem = document.createElement('li');
+          listItem.innerHTML = `
+            <div class="movie-item">
+              <h2 id="movie-title">${movie.attributes.Title}</h2>
+              <div id="movie-rating">${movie.attributes.Rating}</div>
+              <div id="movie-poster"><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
+            </div>
+          `;
+          movieList.appendChild(listItem);
         });
       } else {
         console.log('La respuesta de la API no contiene datos válidos o está vacía.');
@@ -200,7 +196,11 @@ function getPuntuaciones() {
       });
     }
   });
-}
+};
+
+
+
+
 
 
 
