@@ -210,15 +210,16 @@ function eliminarPeliculaPuntuada(movieID) {
       'Authorization': `Bearer ${jwt}`
     },
     success: function (response) {
-      console.log(`Película con ID ${movieID} eliminada correctamente.`);
+      console.log(response);
       // Opcional: puedes realizar alguna acción después de eliminar la película, como actualizar la lista de películas en la interfaz.
       // Por ejemplo, si quieres refrescar la tabla de puntuaciones después de eliminar una película, puedes llamar a la función getPuntuaciones() aquí.
     },
     error: function (error) {
-      console.log(`Error al eliminar película con ID ${movieID}.`);
+      console.log(error);
       // Opcional: muestra un mensaje de error en la interfaz si la película no pudo ser eliminada.
     }
   });
+  getPuntuaciones();
 }
 
 
