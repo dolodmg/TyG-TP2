@@ -84,24 +84,6 @@ stars.forEach((star, index1) => {
   star.addEventListener("click", () => {
     stars.forEach((star, index2) => {
       index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
-      /*
-      $.ajax({
-        url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
-        type: 'POST',
-        dataType: 'json',             //yo
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwt}` //aca habia un error
-        },
-        data: JSON.stringify({
-          "data": {
-            "Title": movieData.Title,        //Modifique yo
-            "Poster": movieData.Poster,
-            "Rating": star.id
-        }}),
-        
-    });
-    */
     });
   });
 });
@@ -273,34 +255,6 @@ function eliminarPeliculaPuntuada(movieID) {
     }
   });
 }
-
-
-function mostrarGrafico(ratingValue) {
-        // Obtener el contexto del lienzo del gráfico
-        var ctx = document.getElementById('graficoTorta').getContext('2d');
-      
-        new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: ['Rating'],
-            datasets: [{
-              data: [ratingValue],
-              backgroundColor: ['#FF6384', '#36A2EB'],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            aspectRatio: 3, // Ajustar el aspecto del gráfico (puedes ajustar el valor según tus necesidades)
-            plugins: {
-              legend: {
-                position: 'bottom' // Cambiar la posición de la leyenda a la parte inferior
-              }
-            }
-          }
-        });
-}
-
 
 var movieRatings = {}; // Variable para almacenar las calificaciones de las películas
 
