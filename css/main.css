@@ -155,12 +155,41 @@ h2 {
     width: 60%;
 }
 
+.movie-rating-rating {
+    font-size: 14px;
+    font-family: 'Roboto Slab';
+    font-weight: bold;
+    color: rgb(255, 43, 96);
+}
+
+.deletebtn {
+    margin: 10px 0 0 !important;
+}
+
+#rating-title {
+    font-size: 25px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: 'Caprasimo';
+    color: rgb(255, 43, 96);
+}
+
+#movie-chart {
+    display: none;
+}
+
+#pieChart {
+    width: 400px !important;
+    height: 400px !important;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
 footer {
     background-color: rgb(255, 43, 96) !important;
 }
 
 #footer-text {
-    background-color:rgb(0, 124, 128);
     text-align: right;
     color: white;
     font-family: 'Roboto Slab';

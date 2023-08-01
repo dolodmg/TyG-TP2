@@ -39,7 +39,7 @@
         <div class="links-api col-2">
             <button onclick="show()" class="btn btn-primary">Movies API</button>
             <button onclick="rateFuncion()" id="myBtn" class="btn btn-primary">Ver puntajes</button>
-            <button onclick="createPieChart()" class="btn btn-primary">Ver stats</button>
+            <button onclick="pieChartBtn()" class="btn btn-primary">Ver stats</button>
         </div>
         <div class="col-10">
             <div class="row">
@@ -79,10 +79,11 @@
             <div id="movie-list" class="row">
                 <!-- Acá se agregarán los elementos de la lista de peliculas rateadas con JavaScript -->
             </div> 
-            <div>
-                <canvas id="pieChart" width="200" height="200"></canvas>
+            <div id="movie-chart">
+                <div id="rating-title">Chart de ratings guardados (agrupados por estrellas)</div>
+                <canvas id="pieChart" width="100" height="100"></canvas>
             </div>
-        </div>      
+        </div>
     </div> 
     <footer id="footer-text">
         Tecnología y Gestión Web - 21/05/2023

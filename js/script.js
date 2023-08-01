@@ -28,6 +28,7 @@ function show() {
     else {
         document.getElementById('movieApi').style.display = "block";
         document.getElementById('movie-list').style.display = "none";
+        document.getElementById('movie-chart').style.display = "none";
     }
 }
 
@@ -169,6 +170,7 @@ function rateFuncion() {
   else {
     document.getElementById('movie-list').style.display = "block";
     document.getElementById('movieApi').style.display = "none";
+    document.getElementById('movie-chart').style.display = "none";
 }
   getPuntuaciones();
 }
@@ -202,8 +204,8 @@ function getPuntuaciones() {
           listItem.innerHTML = `
               <div class="movie-poster-rating"><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
               <div class="movie-title-rating">${movie.attributes.Title}</div>
-              <div class="movie-rating-rating">${movie.attributes.Rating}</div>
-              <button class="btn btn-primary" onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
+              <div class="movie-rating-rating">${movie.attributes.Rating} estrellas</div>
+              <button class="btn btn-primary deletebtn" onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
           `;
           movieList.appendChild(listItem);
 
@@ -256,7 +258,19 @@ function eliminarPeliculaPuntuada(movieID) {
 
 var movieRatings = {}; // Variable para almacenar las calificaciones de las películas
 
-function createPieChart() {
+function pieChartBtn () {
+  if (document.getElementById('movie-chart').style.display == "block") {
+    document.getElementById('movie-chart').style.display = "none";
+  }
+  else {
+    document.getElementById('movie-chart').style.display = "block";
+    document.getElementById('movie-list').style.display = "none";
+    document.getElementById('movieApi').style.display = "none";
+  }
+  createPieChart();
+}
+
+function createPieChart() { //Función para crear el gráfico de las películas rateadas
   var storedMovieRatings = localStorage.getItem("movieRatings");
   if (storedMovieRatings) {
     movieRatings = JSON.parse(storedMovieRatings);
@@ -292,7 +306,7 @@ function createPieChart() {
       labels: pieData.map((data) => data.rating),
       datasets: [{
         data: pieData.map((data) => data.count),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#8E5EA2", "#FF9F40", "#4BC0C0"],
+        backgroundColor: ["#78f39d", "#d89ae7", "#f58766", "#ffa7b6", "#a5dee0"],
       }],
     };
 
