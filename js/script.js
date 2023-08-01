@@ -186,21 +186,27 @@ function getPuntuaciones() {
     },
     success: function (response) {
       console.log(response);
-  
+
       if (Array.isArray(response.data)) {
         var movieList = document.getElementById('movie-list');
         movieList.innerHTML = '';
-  
+
+        // Actualizar el objeto movieRatings con los datos del localStorage
+        var storedMovieRatings = localStorage.getItem("movieRatings");
+        if (storedMovieRatings) {
+          movieRatings = JSON.parse(storedMovieRatings);
+        }
+
         response.data.forEach(function (movie) {
           var listItem = document.createElement('div');
           listItem.setAttribute("class", "movie-item");
-  
+
           var movieTitle = movie.attributes.Title;
           // Verificar si la película está eliminada
           if (movieRatings[movieTitle] && movieRatings[movieTitle].deleted) {
             return; // Si está eliminada, saltar a la siguiente iteración
           }
-  
+
           listItem.innerHTML = `
               <div class="movie-poster-rating"><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
               <div class="movie-title-rating">${movie.attributes.Title}</div>
@@ -208,12 +214,6 @@ function getPuntuaciones() {
               <button class="btn btn-primary deletebtn" onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
           `;
           movieList.appendChild(listItem);
-
-          var storedMovieRatings = localStorage.getItem("movieRatings");
-          if (storedMovieRatings) {
-             movieRatings = JSON.parse(storedMovieRatings);
-        }
-
         });
       } else {
         console.log('La respuesta de la API no contiene datos válidos o está vacía.');
@@ -228,7 +228,7 @@ function getPuntuaciones() {
       });
     }
   });
-};
+}
 
 
 function eliminarPeliculaPuntuada(movieID) {
@@ -243,11 +243,16 @@ function eliminarPeliculaPuntuada(movieID) {
     success: function (response) {
       console.log(response);
       var movieTitle = response.data.attributes.Title;
+
+      // Eliminar la película del objeto movieRatings
       if (movieRatings[movieTitle]) {
         delete movieRatings[movieTitle].deleted;
         delete movieRatings[movieTitle].Rating; 
       }
+
+      // Eliminar la película del localStorage
       localStorage.setItem("movieRatings", JSON.stringify(movieRatings));
+
       getPuntuaciones();
     },
     error: function (error) {
@@ -255,6 +260,7 @@ function eliminarPeliculaPuntuada(movieID) {
     }
   });
 }
+
 
 var movieRatings = {}; // Variable para almacenar las calificaciones de las películas
 
