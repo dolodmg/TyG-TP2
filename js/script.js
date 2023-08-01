@@ -112,45 +112,57 @@ function addRating() {
     var ratingValue = activeStar.id.split("-")[1];
     var movieTitle = document.getElementById('movie-title').innerHTML;
     var moviePoster = document.getElementById('movie-poster').src;
-    
-    // Guardar el rating de la película en el objeto movieRatings
-    movieRatings[movieTitle] = {
-      "Title":movieTitle,
-      "Poster": moviePoster,
-      "Rating": ratingValue,
-    };
-    
-    $.ajax({
-      url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
-      type: 'POST',
-      dataType: 'json',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`
-      },
-      data: JSON.stringify({
-        "data": {
-          "Title": movieTitle, //.
-          "Poster": moviePoster,
-          "Rating": ratingValue
+  
+    if (movieRatings[movieTitle] && movieRatings[movieTitle].deleted) {
+      delete movieRatings[movieTitle].deleted;
+    }  
+    else if (movieRatings[movieTitle]) {
+      console.log("Esta película ya ha sido puntuada. No se puede puntuar nuevamente.");
+      Swal.fire({
+        title: 'Esta pelicula ya se puntúo',
+        icon: 'error',
+      });
+      return;
+    }  
+    else{
+      movieRatings[movieTitle] = {
+        "Title": movieTitle,
+        "Poster": moviePoster,
+        "Rating": ratingValue,
+      };
+      $.ajax({
+        url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
+        type: 'POST',
+        dataType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwt}`
+        },
+        data: JSON.stringify({
+          "data": {
+            "Title": movieTitle, //.
+            "Poster": moviePoster,
+            "Rating": ratingValue
+          }
+        }),
+        success: function (response) {
+          console.log(response);
+          Swal.fire({
+            title: 'Se puntuó correctamente',
+            icon: 'success',
+          });
+        },
+        error: function (error) {
+          console.log(error);
+          Swal.fire({
+            title: 'Error al puntuar',
+            text: 'Ocurrió un error al guardar la puntuación.',
+            icon: 'error',
+          });
         }
-      }),
-      success: function (response) {
-        console.log(response);
-        Swal.fire({
-          title: 'Se puntuó correctamente',
-          icon: 'success',
-        });
-      },
-      error: function (error) {
-        console.log(error);
-        Swal.fire({
-          title: 'Error al puntuar',
-          text: 'Ocurrió un error al guardar la puntuación.',
-          icon: 'error',
-        });
-      }
-    });
+      });
+        
+    }
   } else {
     console.log("Por favor, seleccione un valor de rating antes de guardar.");
   }
@@ -175,14 +187,21 @@ function getPuntuaciones() {
     },
     success: function (response) {
       console.log(response);
-
+  
       if (Array.isArray(response.data) && response.data.length > 0) {
         var movieList = document.getElementById('movie-list');
         movieList.innerHTML = '';
-
+  
         response.data.forEach(function (movie) {
           var listItem = document.createElement('div');
           listItem.setAttribute("class", "movie-item");
+  
+          var movieTitle = movie.attributes.Title;
+          // Verificar si la película está eliminada
+          if (movieRatings[movieTitle] && movieRatings[movieTitle].deleted) {
+            return; // Si está eliminada, saltar a la siguiente iteración
+          }
+  
           listItem.innerHTML = `
               <div class="movie-poster-rating"><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
               <div class="movie-title-rating">${movie.attributes.Title}</div>
@@ -218,12 +237,16 @@ function eliminarPeliculaPuntuada(movieID) {
     },
     success: function (response) {
       console.log(response);
+      var movieTitle = response.data.attributes.Title;
+      if (movieRatings[movieTitle]) {
+        movieRatings[movieTitle].deleted = true;
+      }
+      getPuntuaciones();
     },
     error: function (error) {
       console.log(error);
     }
   });
-  getPuntuaciones();
 }
 
 
