@@ -162,6 +162,7 @@ function addRating() {
             title: 'Se puntuó correctamente',
             icon: 'success',
           });
+          createPieChart();
         },
         error: function (error) {
           console.log(error);
@@ -230,6 +231,7 @@ function getPuntuaciones() {
         }
 
         });
+        createPieChart();
       } else {
         console.log('La respuesta de la API no contiene datos válidos o está vacía.');
       }
@@ -263,7 +265,7 @@ function eliminarPeliculaPuntuada(movieID) {
         delete movieRatings[movieTitle].Rating; 
       }
       localStorage.setItem("movieRatings", JSON.stringify(movieRatings));
-
+      createPieChart();
       getPuntuaciones();
     },
     error: function (error) {
@@ -300,10 +302,12 @@ function mostrarGrafico(ratingValue) {
 }
 
 
+var movieRatings = {}; // Variable para almacenar las calificaciones de las películas
+
 function createPieChart() {
   var storedMovieRatings = localStorage.getItem("movieRatings");
   if (storedMovieRatings) {
-    var movieRatings = JSON.parse(storedMovieRatings);
+    movieRatings = JSON.parse(storedMovieRatings);
 
     var ratingCounts = {}; // Objeto para almacenar la cantidad de películas por rating
     var totalMovies = 0; // Contador para el total de películas puntuadas
@@ -355,6 +359,7 @@ function createPieChart() {
     });
   }
 }
+
 
 
 
