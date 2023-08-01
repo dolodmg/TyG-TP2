@@ -213,7 +213,6 @@ function getPuntuaciones() {
         }
 
         });
-        createPieChart();
       } else {
         console.log('La respuesta de la API no contiene datos válidos o está vacía.');
       }
@@ -247,7 +246,6 @@ function eliminarPeliculaPuntuada(movieID) {
         delete movieRatings[movieTitle].Rating; 
       }
       localStorage.setItem("movieRatings", JSON.stringify(movieRatings));
-      createPieChart();
       getPuntuaciones();
     },
     error: function (error) {
