@@ -168,8 +168,7 @@ function addRating() {
   }
 };
 
-
-function getPuntuaciones() {
+function rateFuncion() {
   if (document.getElementById('movie-list').style.display == "block") {
     document.getElementById('movie-list').style.display = "none";
   }
@@ -177,6 +176,10 @@ function getPuntuaciones() {
     document.getElementById('movie-list').style.display = "block";
     document.getElementById('movieApi').style.display = "none";
 }
+  getPuntuaciones();
+}
+
+function getPuntuaciones() {
   $.ajax({
     url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
     type: 'GET',
@@ -188,7 +191,7 @@ function getPuntuaciones() {
     success: function (response) {
       console.log(response);
   
-      if (Array.isArray(response.data) && response.data.length > 0) {
+      if (Array.isArray(response.data)) {
         var movieList = document.getElementById('movie-list');
         movieList.innerHTML = '';
   
