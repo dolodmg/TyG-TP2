@@ -140,7 +140,7 @@ function addRating() {
       };
 
       localStorage.setItem("movieRatings", JSON.stringify(movieRatings));
-      
+
       $.ajax({
         url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
         type: 'POST',
@@ -273,9 +273,88 @@ function eliminarPeliculaPuntuada(movieID) {
 }
 
 
+function mostrarGrafico(ratingValue) {
+        // Obtener el contexto del lienzo del gráfico
+        var ctx = document.getElementById('graficoTorta').getContext('2d');
+      
+        new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ['Rating'],
+            datasets: [{
+              data: [ratingValue],
+              backgroundColor: ['#FF6384', '#36A2EB'],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            aspectRatio: 3, // Ajustar el aspecto del gráfico (puedes ajustar el valor según tus necesidades)
+            plugins: {
+              legend: {
+                position: 'bottom' // Cambiar la posición de la leyenda a la parte inferior
+              }
+            }
+          }
+        });
+}
 
 
+function createPieChart() {
+  var storedMovieRatings = localStorage.getItem("movieRatings");
+  if (storedMovieRatings) {
+    var movieRatings = JSON.parse(storedMovieRatings);
 
+    var ratingCounts = {}; // Objeto para almacenar la cantidad de películas por rating
+    var totalMovies = 0; // Contador para el total de películas puntuadas
+
+    // Contar la cantidad de películas por rating
+    for (var movieTitle in movieRatings) {
+      var rating = parseInt(movieRatings[movieTitle].Rating);
+      if (!isNaN(rating)) {
+        ratingCounts[rating] = (ratingCounts[rating] || 0) + 1;
+        totalMovies++;
+      }
+    }
+
+    // Preparar los datos para el gráfico de torta
+    var pieData = [];
+    for (var rating in ratingCounts) {
+      var percentage = (ratingCounts[rating] / totalMovies) * 100;
+      pieData.push({
+        rating: rating,
+        count: ratingCounts[rating],
+        percentage: percentage.toFixed(2) + "%",
+      });
+    }
+
+    // Obtener el contexto del elemento canvas donde se mostrará el gráfico
+    var ctx = document.getElementById("pieChart").getContext("2d");
+
+    // Configurar los datos y opciones del gráfico de torta
+    var data = {
+      labels: pieData.map((data) => data.rating),
+      datasets: [{
+        data: pieData.map((data) => data.count),
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#8E5EA2", "#FF9F40", "#4BC0C0"],
+      }],
+    };
+
+    var options = {
+      title: {
+        display: true,
+        text: "Gráfico de Torta de Películas Puntuadas por Rating",
+      },
+    };
+
+    // Crear el gráfico de torta
+    new Chart(ctx, {
+      type: "pie",
+      data: data,
+      options: options,
+    });
+  }
+}
 
 
 
