@@ -27,6 +27,7 @@ function show() {
     }
     else {
         document.getElementById('movieApi').style.display = "block";
+        document.getElementById('movie-list').style.display = "none";
     }
 }
 
@@ -157,6 +158,13 @@ function addRating() {
 
 
 function getPuntuaciones() {
+  if (document.getElementById('movie-list').style.display == "block") {
+    document.getElementById('movie-list').style.display = "none";
+  }
+  else {
+    document.getElementById('movie-list').style.display = "block";
+    document.getElementById('movieApi').style.display = "none";
+}
   $.ajax({
     url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
     type: 'GET',
@@ -173,14 +181,13 @@ function getPuntuaciones() {
         movieList.innerHTML = '';
 
         response.data.forEach(function (movie) {
-          var listItem = document.createElement('li');
+          var listItem = document.createElement('div');
+          listItem.setAttribute("class", "movie-item");
           listItem.innerHTML = `
-            <div class="movie-item">
-              <h2>${movie.attributes.Title}</h2>
-              <div>${movie.attributes.Rating}</div>
-              <div><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
-              <button onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
-            </div>
+              <div class="movie-poster-rating"><img src="${movie.attributes.Poster}" alt="Movie Poster"></div>
+              <div class="movie-title-rating">${movie.attributes.Title}</div>
+              <div class="movie-rating-rating">${movie.attributes.Rating}</div>
+              <button class="btn btn-primary" onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
           `;
           movieList.appendChild(listItem);
         });
@@ -211,12 +218,9 @@ function eliminarPeliculaPuntuada(movieID) {
     },
     success: function (response) {
       console.log(response);
-      // Opcional: puedes realizar alguna acción después de eliminar la película, como actualizar la lista de películas en la interfaz.
-      // Por ejemplo, si quieres refrescar la tabla de puntuaciones después de eliminar una película, puedes llamar a la función getPuntuaciones() aquí.
     },
     error: function (error) {
       console.log(error);
-      // Opcional: muestra un mensaje de error en la interfaz si la película no pudo ser eliminada.
     }
   });
   getPuntuaciones();

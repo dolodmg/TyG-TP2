@@ -37,7 +37,7 @@
     <div class="container-fluid row">
         <div class="links-api col-2">
             <button onclick="show()" class="btn btn-primary">Movies API</button>
-            <button onclick="getPuntuaciones()" class="btn btn-primary">Ver puntajes</button>
+            <button onclick="getPuntuaciones()" id="myBtn" class="btn btn-primary">Ver puntajes</button>
             <button onclick="showStats()" class="btn btn-primary">Ver stats</button>
         </div>
         <div class="col-10">
@@ -63,23 +63,21 @@
                         <div class="movie-rate">
                             <h2>Puntuar película</h2>
                             <div class="stars" id="rating">
-                                <i class="fa-solid fa-star" id="rating-1" ></i>
-                                <i class="fa-solid fa-star" id="rating-2" ></i>
-                                <i class="fa-solid fa-star" id="rating-3" ></i>
-                                <i class="fa-solid fa-star" id="rating-4" ></i>
-                                <i class="fa-solid fa-star" id="rating-5" ></i>
+                                <i class="fa-solid fa-star" id="rating-1"></i>
+                                <i class="fa-solid fa-star" id="rating-2"></i>
+                                <i class="fa-solid fa-star" id="rating-3"></i>
+                                <i class="fa-solid fa-star" id="rating-4"></i>
+                                <i class="fa-solid fa-star" id="rating-5"></i>
                             </div>
-                            <button id="btnGuardar" onclick="addRating()">Guardar</button>
+                            <button class="btn btn-primary" id="btnGuardar" onclick="addRating()">Guardar</button>
                         </div>
                     </div>
                     <p id="no-result">No se encontró ninguna película</p>
-                </div>
-                <div>
-                    <ul id="movie-list">
-                        <!-- Aquí se agregarán los elementos de la lista con JavaScript -->
-                    </ul>   
-                </div>    
+                </div>      
             </div>
+            <div id="movie-list" class="row">
+                <!-- Acá se agregarán los elementos de la lista de peliculas rateadas con JavaScript -->
+            </div> 
         </div>      
     </div> 
     <footer id="footer-text">

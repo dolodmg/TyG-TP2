@@ -136,6 +136,25 @@ h2 {
     font-family: 'Poppins';
 }
 
+.movie-item {
+    box-sizing: border-box;
+    width: 33%;
+  	float: left;
+    overflow: hidden;
+    height: 600px;
+    padding: 20px 20px 0;
+}
+
+.movie-title-rating {
+    font-size: 14px;
+    font-family: 'Caprasimo';
+    color: rgb(238, 75, 26);
+}
+
+.movie-poster-rating {
+    width: 60%;
+}
+
 footer {
     background-color: rgb(255, 43, 96) !important;
 }
