@@ -106,17 +106,25 @@ stars.forEach((star, index1) => {
   });
 });
 
+function isMovieRated(movieTitle) {
+  var storedMovieRatings = localStorage.getItem("movieRatings");
+  if (storedMovieRatings) {
+    var movieRatings = JSON.parse(storedMovieRatings);
+    return movieRatings[movieTitle] && movieRatings[movieTitle].Rating;
+  }
+  return false;
+}
+
+
 function addRating() {
   var activeStar = document.querySelector(".stars .active");
+  var activeStars = document.querySelectorAll(".stars .active");
   if (activeStar) {
-    var ratingValue = activeStar.id.split("-")[1];
+    var ratingValue = activeStars.length.toString();
     var movieTitle = document.getElementById('movie-title').innerHTML;
     var moviePoster = document.getElementById('movie-poster').src;
-  
-    if (movieRatings[movieTitle] && movieRatings[movieTitle].deleted) {
-      delete movieRatings[movieTitle].deleted;
-    }  
-    else if (movieRatings[movieTitle]) {
+
+    if (isMovieRated(movieTitle)) {
       console.log("Esta película ya ha sido puntuada. No se puede puntuar nuevamente.");
       Swal.fire({
         title: 'Esta pelicula ya se puntúo',
@@ -124,12 +132,15 @@ function addRating() {
       });
       return;
     }  
-    else{
+    else {
       movieRatings[movieTitle] = {
         "Title": movieTitle,
         "Poster": moviePoster,
         "Rating": ratingValue,
       };
+
+      localStorage.setItem("movieRatings", JSON.stringify(movieRatings));
+      
       $.ajax({
         url: 'https://gestionweb.frlp.utn.edu.ar/api/g15-peliculas',
         type: 'POST',
@@ -140,7 +151,7 @@ function addRating() {
         },
         data: JSON.stringify({
           "data": {
-            "Title": movieTitle, //.
+            "Title": movieTitle,
             "Poster": moviePoster,
             "Rating": ratingValue
           }
@@ -161,12 +172,12 @@ function addRating() {
           });
         }
       });
-        
+      
     }
   } else {
     console.log("Por favor, seleccione un valor de rating antes de guardar.");
   }
-};
+}
 
 function rateFuncion() {
   if (document.getElementById('movie-list').style.display == "block") {
@@ -212,6 +223,12 @@ function getPuntuaciones() {
               <button class="btn btn-primary" onclick="eliminarPeliculaPuntuada('${movie.id}')">Eliminar</button>
           `;
           movieList.appendChild(listItem);
+
+          var storedMovieRatings = localStorage.getItem("movieRatings");
+          if (storedMovieRatings) {
+             movieRatings = JSON.parse(storedMovieRatings);
+        }
+
         });
       } else {
         console.log('La respuesta de la API no contiene datos válidos o está vacía.');
@@ -242,8 +259,11 @@ function eliminarPeliculaPuntuada(movieID) {
       console.log(response);
       var movieTitle = response.data.attributes.Title;
       if (movieRatings[movieTitle]) {
-        movieRatings[movieTitle].deleted = true;
+        delete movieRatings[movieTitle].deleted;
+        delete movieRatings[movieTitle].Rating; 
       }
+      localStorage.setItem("movieRatings", JSON.stringify(movieRatings));
+
       getPuntuaciones();
     },
     error: function (error) {
@@ -251,7 +271,6 @@ function eliminarPeliculaPuntuada(movieID) {
     }
   });
 }
-
 
 
 
